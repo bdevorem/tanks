@@ -18,14 +18,12 @@ class GameSpace(object):
 
 		self.size = width,height = (640,480)
 		self.screen = pygame.display.set_mode(self.size)
+		self.background = pygame.image.load("wood.png")
+		self.back_rect = self.background.get_rect()
 		self.black = (0,0,0)
 
 		#2) Set up game objects
 		self.clock = pygame.time.Clock()
-		self.deathstar = DeathStar(self)
-		self.planet = Planet(self)
-		self.lasers = []
-		self.explosion = Explosion(self)
 
 		#3) Start game loop
 		while 1:
@@ -36,7 +34,9 @@ class GameSpace(object):
 			for event in pygame.event.get():
 				if event.type == QUIT:
 					sys.exit()
-				elif event.type == KEYDOWN:
+			self.screen.blit(self.background, self.back_rect)
+			pygame.display.flip()
+"""				elif event.type == KEYDOWN:
 					self.deathstar.move(event.key)
 				elif event.type == MOUSEBUTTONDOWN:
 					self.deathstar.tofire = True
@@ -51,18 +51,17 @@ class GameSpace(object):
 			self.planet.tick()
 			for laser in self.lasers:
 				laser.tick()
-
+"""
 
 			#7) Display game objects
-			self.screen.fill(self.black)
-			for laser in self.lasers:
+"""			for laser in self.lasers:
 				self.screen.blit(laser.image, laser.rect)
 			self.screen.blit(self.deathstar.image, self.deathstar.rect)
 			if self.planet.hp <= 0:
 				self.screen.blit(self.explosion.image, self.explosion.rect)
 			self.screen.blit(self.planet.image, self.planet.rect)
 			pygame.display.flip()
-
+"""
 if __name__ == '__main__':
 	gs = GameSpace()
 	gs.start()		
