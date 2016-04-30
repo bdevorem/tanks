@@ -16,7 +16,7 @@ class tank(pygame.sprite.Sprite):
 		self.image = pygame.transform.scale(self.image, (40, 40))
 		self.image = pygame.transform.scale(self.orig_image, (40, 40))
 		self.rect = self.image.get_rect()
-		self.rect.center = (5,475)
+		self.rect.center = (55,425)
 		self.fire_x = 0
 		self.fire_y = 0
 
