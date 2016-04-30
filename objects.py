@@ -3,7 +3,7 @@
 # Tanks Game
 # Programming Paradigms final project
 # 4-23-16
-# Ojbects file
+# Objects file
 
 import sys
 import os

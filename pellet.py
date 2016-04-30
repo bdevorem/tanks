@@ -3,6 +3,7 @@ import os
 import pygame
 import math
 from pygame.locals import *
+from explode import Explosion
 
 class Pellet(pygame.sprite.Sprite):
 	def __init__(self, source, angle, center, gs=None):
@@ -27,22 +28,36 @@ class Pellet(pygame.sprite.Sprite):
 		self.rect = self.rect.move(self.dx, self.dy)
 
 	def checkBounce(self):
+		orig_center = self.rect.center
 		self.temp_rect = self.rect.move(self.dx, 0)
+		horiz_coll = False
+		vert_coll = False
 		for block in self.gs.blocks:
 			if pygame.Rect.colliderect(self.temp_rect, block.rect) and self.bounce == 0:
-				self.dx = -1*self.dx
-				self.bounce += 1
-			else:
-				pass
-				#self.explode()
+				horiz_coll = True
+				print("side collision, no explode")
+			elif pygame.Rect.colliderect(self.temp_rect, block.rect):
+				#pass
+				print("side collision, explosion")
+				self.explode()
+		self.temp_rect.center = orig_center
 		self.temp_rect = self.rect.move(0, self.dy)
 		for block in self.gs.blocks:
 			if pygame.Rect.colliderect(self.temp_rect, block.rect) and self.bounce == 0:
-				self.dy = -1*self.dy
-				self.bounce += 1
-			else:
-				pass
-#				self.explode()
+				vert_coll = True
+				print("top collision, no explode")
+			elif pygame.Rect.colliderect(self.temp_rect, block.rect):
+				#pass
+				print("top collision, explosion")
+				self.explode()
+		if horiz_coll:
+			self.dx = -1 * self.dx
+		if vert_coll:
+			self.dx = -1 * self.dy
+		if horiz_coll or vert_coll:
+			self.bounce += 1
+			
+		self.rect.center=orig_center
 
 	def checkCollision(self):
 #		if pygame.Rect.colliderect(self.rect, self.gs.player.rect):
@@ -62,5 +77,6 @@ class Pellet(pygame.sprite.Sprite):
 				pass
 
 	def explode(self):
-		self.gs.pellets.remove(self)
-		self = Explosion(self.gs)
+#		self.gs.pellets.remove(self)
+		self = Explosion(self.rect.center, self.gs)
+		self.gs.explosions.append(self)
