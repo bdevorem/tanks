@@ -1,9 +1,10 @@
 #!/usr/bin/env python2
-
+import sys
 import os
 import pygame
 import math
 from pygame.locals import *
+from pellet import Pellet
 
 class tank(pygame.sprite.Sprite):
 	def __init__(self, gs=None):
@@ -14,12 +15,12 @@ class tank(pygame.sprite.Sprite):
 		self.orig_image = pygame.image.load("imgs/tank1.png")
 		# tank is a tad smaller than gun bc collision detecting
 		self.image = pygame.transform.scale(self.image, (40, 40))
-		self.image = pygame.transform.scale(self.orig_image, (40, 40))
+		self.orig_image = pygame.transform.scale(self.orig_image, (40, 40))
 		self.rect = self.image.get_rect()
 		self.rect.center = (5,475)
 		self.fire_x = 0
 		self.fire_y = 0
-
+		self.fire_timer = 0
 		self.tofire = False
 		
 		self.gun = gun(self.rect.center, self.gs)
@@ -28,16 +29,20 @@ class tank(pygame.sprite.Sprite):
 		mx, my = pygame.mouse.get_pos()
 		dx = mx - self.rect.centerx
 		dy = self.rect.centery - my
-
-		if self.tofire == True:
+		if self.fire_timer != 0:
+			self.fire_timer -= 1
+		if self.tofire == True and self.fire_timer == 0:
+			self.fire_timer = 10
 			# can still come from center of tank since the 
 			# gun will be pointing in the same direction
 			
 			########################################################
 			# waiting for bullet class
-			#laser = Laser(math.atan2(self.rect.centery-self.fire_y,self.fire_x-self.rect.centerx), self.rect.center, self.gs)
-			#self.gs.lasers.append(laser)
-			print('shoot')
+			fire_x, fire_y = pygame.mouse.get_pos()
+			angle = math.atan2(self.rect.centery-fire_y, fire_x-self.rect.centerx)
+			pellet_center = (self.rect.centerx+math.cos(angle)*24,self.rect.centery-math.sin(angle)*24)
+			pellet = Pellet(self, angle, pellet_center, self.gs)
+			self.gs.pellets.append(pellet)
 			#########################################################
 			# SOUND
 			#if pygame.mixer.music.get_busy() == False:
