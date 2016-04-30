@@ -11,6 +11,8 @@ import os
 import pygame
 from pygame.locals import *
 from objects import *
+from level import Level
+from block import Block
 
 class GameSpace(object):
 	def start(self):
@@ -21,9 +23,12 @@ class GameSpace(object):
 		self.screen = pygame.display.set_mode(self.size)
 		self.background = pygame.image.load("wood.png")
 		self.back_rect = self.background.get_rect()
-
+		
 		#2) Set up game objects
 		self.clock = pygame.time.Clock()
+		self.level = Level(self)
+		self.objects = self.level.createObjects()
+		self.blocks = self.objects['Blocks']
 
 		#3) Start game loop
 		while 1:
@@ -34,13 +39,14 @@ class GameSpace(object):
 			for event in pygame.event.get():
 				if event.type == QUIT:
 					sys.exit()
-			self.screen.blit(self.background, self.back_rect)
 
 			#6) Send ticks to objects
 
 			#7) Display game objects
+			self.screen.blit(self.background, self.back_rect)
+			for block in self.blocks:
+				self.screen.blit(block.image, block.rect)
 			pygame.display.flip()
-
 
 if __name__ == '__main__':
 	gs = GameSpace()
