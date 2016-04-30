@@ -60,9 +60,9 @@ class Pellet(pygame.sprite.Sprite):
 		self.rect.center=orig_center
 
 	def checkCollision(self):
-#		if pygame.Rect.colliderect(self.rect, self.gs.player.rect):
-#			self.explode()
-#			self.gs.player.explode()
+		if pygame.Rect.colliderect(self.rect, self.gs.tank1.rect):
+			self.explode()
+			self.gs.tank1.explode()
 #		if pygame.Rect.colliderect(self.rect, self.gs.teammate.rect):
 #			self.explode()
 #			self.gs.teammate.explode()
@@ -72,11 +72,12 @@ class Pellet(pygame.sprite.Sprite):
 #				enemy.explode()
 		for pellet in self.gs.pellets:
 			if pygame.Rect.colliderect(self.rect, pellet.rect) and pellet.rect != self.rect:
-#				self.explode()
-#				pellet.explode()
-				pass
+				self.explode()
+				pellet.explode()
+				#print 'pellet collision'
 
 	def explode(self):
-#		self.gs.pellets.remove(self)
-		self = Explosion(self.rect.center, self.gs)
-		self.gs.explosions.append(self)
+		self.gs.pellets.remove(self)
+		self.gs.explosions.append(Explosion(self.rect.center, self.gs))
+
+
