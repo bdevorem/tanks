@@ -10,8 +10,8 @@ class tank(pygame.sprite.Sprite):
 		pygame.sprite.Sprite.__init__(self)
 
 		self.gs = gs
-		self.image = pygame.image.load("tank.png")
-		self.orig_image = pygame.image.load("tank.png")
+		self.image = pygame.image.load("/img/tank1.png")
+		self.orig_image = pygame.image.load("/img/tank1.png")
 		self.rect = self.image.get_rect()
 		self.rect.center = (5,475)
 		self.fire_x = 0
@@ -59,14 +59,10 @@ class tank(pygame.sprite.Sprite):
 class gun(pygame.sprite.Sprite):
 	def __init__(self, center=(0,0), gs=None)
 		self.gs = gs
-		self.image = pygame.image.load("gun.png")
-		self.orig_image = pygame.image.load("gun.png")
+		self.image = pygame.image.load("/img/gun.png")
+		self.orig_image = pygame.image.load("/img/gun.png")
 		self.rect = self.image.get_rect()
 		self.rect.center = center
-		self.fire_x = 0
-		self.fire_y = 0
-
-		self.tofire = False
 
 	def move(self, keycode):
 		if keycode == 273:
