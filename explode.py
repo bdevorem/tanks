@@ -32,11 +32,18 @@ class Explosion(pygame.sprite.Sprite):
 		self.rect = self.image.get_rect()
 		self.rect.center = center
 		self.death_tick = 0
+		#print 'init for explosion'
 
 	def tick(self):
+		#print 'tick for explosion'
 		self.death_tick += 1
 		if self.death_tick % 8 == 0 and self.curr_im < 15:
 			self.curr_im += 1
 			self.image = self.expl_imgs[self.curr_im]
 			self.rect = self.image.get_rect()
-			self.rect.center = self.cenbter
+			self.rect.center = self.center
+		elif self.death_tick % 8 == 0 and self.curr_im > 15:
+			self.gs.explosions.remove(self)
+
+
+

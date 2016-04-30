@@ -37,6 +37,7 @@ class GameSpace(object):
 		self.blocks = self.objects['Blocks']
 		self.tank1 = tank(self)
 		self.pellets = []
+		self.explosions = []
 
 		#3) Start game loop
 		hold = False
@@ -68,13 +69,17 @@ class GameSpace(object):
 			self.tank1.tick()
 			for pellet in self.pellets:
 				pellet.tick()
-
+			for expl in self.explosions:
+				expl.tick()
+	
 			#7) Display game objects
 			self.screen.blit(self.background, self.back_rect)
 			for block in self.blocks:
 				self.screen.blit(block.image, block.rect)
 			for pellet in self.pellets:
 				self.screen.blit(pellet.image, pellet.rect)
+			for expl in self.explosions:
+				self.screen.blit(expl.image, pellet.rect)
 			self.screen.blit(self.tank1.image, self.tank1.rect)
 			self.screen.blit(self.tank1.gun.image, self.tank1.gun.rect)
 			pygame.display.flip()

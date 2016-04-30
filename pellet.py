@@ -64,4 +64,6 @@ class Pellet(pygame.sprite.Sprite):
 
 	def explode(self):
 		self.gs.pellets.remove(self)
-		self = Explosion(self.rect.center, self.gs)
+		self.gs.explosions.append(Explosion(self.rect.center, self.gs))
+
+
