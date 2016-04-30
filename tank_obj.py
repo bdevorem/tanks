@@ -30,6 +30,8 @@ class tank(pygame.sprite.Sprite):
 			# can still come from center of tank since the 
 			# gun will be pointing in the same direction
 			
+			########################################################
+			# waiting for bullet class
 			#laser = Laser(math.atan2(self.rect.centery-self.fire_y,self.fire_x-self.rect.centerx), self.rect.center, self.gs)
 			#self.gs.lasers.append(laser)
 			print('shoot')
@@ -43,9 +45,6 @@ class tank(pygame.sprite.Sprite):
 			#pygame.mixer.stop()
 			if dx != 0:
 				self.gun.rotate(dx, dy)
-				#self.image = pygame.transform.rotate(self.orig_image, math.atan2(dy,dx)/math.pi*180-40)
-				#self.rect = self.image.get_rect(center=self.rect.center)
-
 
 	def move(self, keycode):
 		self.gun.move(keycode)
@@ -68,6 +67,7 @@ class gun(pygame.sprite.Sprite):
 		self.rect.center = center
 
 	def move(self, keycode):
+		#print "made it"
 		if keycode == 273:
 			self.rect = self.rect.move(0, -3)
 		elif keycode == 274:
@@ -79,7 +79,7 @@ class gun(pygame.sprite.Sprite):
 
 	def rotate(self, dx, dy):
 		self.image = pygame.transform.rotate(self.orig_image, 
-							math.atan2(dy,dx)/math.pi*180-40)
+							math.atan2(dy,dx)/math.pi*180)
 		self.rect = self.image.get_rect(center=self.rect.center)
 
 
