@@ -10,8 +10,8 @@ class tank(pygame.sprite.Sprite):
 		pygame.sprite.Sprite.__init__(self)
 
 		self.gs = gs
-		self.image = pygame.image.load("/img/tank1.png")
-		self.orig_image = pygame.image.load("/img/tank1.png")
+		self.image = pygame.image.load("imgs/tank1.png")
+		self.orig_image = pygame.image.load("imgs/tank1.png")
 		self.rect = self.image.get_rect()
 		self.rect.center = (5,475)
 		self.fire_x = 0
@@ -29,9 +29,12 @@ class tank(pygame.sprite.Sprite):
 		if self.tofire == True:
 			# can still come from center of tank since the 
 			# gun will be pointing in the same direction
-			laser = Laser(math.atan2(self.rect.centery-self.fire_y,self.fire_x-self.rect.centerx), self.rect.center, self.gs)
-			self.gs.lasers.append(laser)
 			
+			#laser = Laser(math.atan2(self.rect.centery-self.fire_y,self.fire_x-self.rect.centerx), self.rect.center, self.gs)
+			#self.gs.lasers.append(laser)
+			print 'shoot'	
+			#########################################################
+			# SOUND
 			#if pygame.mixer.music.get_busy() == False:
 			#	pygame.mixer.music.load("screammachine.wav")
 			#	pygame.mixer.music.set_volume(1)
@@ -57,10 +60,10 @@ class tank(pygame.sprite.Sprite):
 			self.rect = self.rect.move(-3, 0)
 
 class gun(pygame.sprite.Sprite):
-	def __init__(self, center=(0,0), gs=None)
+	def __init__(self, center=None, gs=None):
 		self.gs = gs
-		self.image = pygame.image.load("/img/gun.png")
-		self.orig_image = pygame.image.load("/img/gun.png")
+		self.image = pygame.image.load("imgs/gun.png")
+		self.orig_image = pygame.image.load("imgs/gun.png")
 		self.rect = self.image.get_rect()
 		self.rect.center = center
 
