@@ -25,7 +25,9 @@ class Explosion(pygame.sprite.Sprite):
 						pygame.image.load("imgs/explosion/frames012a.png"),
 						pygame.image.load("imgs/explosion/frames013a.png"),
 						pygame.image.load("imgs/explosion/frames014a.png"),
-						pygame.image.load("imgs/explosion/frames015a.png")]
+						pygame.image.load("imgs/explosion/frames015a.png"),
+						pygame.image.load("imgs/wood.png")
+]
 		self.curr_im = 0
 		self.center = center
 		self.image = self.expl_imgs[self.curr_im]
@@ -37,12 +39,12 @@ class Explosion(pygame.sprite.Sprite):
 	def tick(self):
 		#print 'tick for explosion'
 		self.death_tick += 1
-		if self.death_tick % 8 == 0 and self.curr_im < 15:
+		if self.death_tick % 8 == 0 and self.curr_im < 16:
 			self.curr_im += 1
 			self.image = self.expl_imgs[self.curr_im]
 			self.rect = self.image.get_rect()
 			self.rect.center = self.center
-		elif self.death_tick % 8 == 0 and self.curr_im > 15:
+		elif self.death_tick % 8 == 0 and self.curr_im > 16:
 			self.gs.explosions.remove(self)
 
 
