@@ -39,6 +39,7 @@ class GameSpace(object):
 		self.pellets = []
 
 		#3) Start game loop
+		hold = False
 		while 1:
 			#4) Clock tick regulation
 			self.clock.tick(60)
@@ -47,7 +48,15 @@ class GameSpace(object):
 			for event in pygame.event.get():
 				if event.type == QUIT:
 					sys.exit()
+				#elif event.type == KEYUP:
+				#	hold = False
+				#	print 'keyup'
+				#elif hold is True:
+				#	print 'yes'
+				#	self.tank1.move(key)
 				elif event.type == KEYDOWN:
+				#	hold = True
+				#	key = event.key
 					self.tank1.move(event.key)
 				elif event.type == MOUSEBUTTONDOWN:
 					self.tank1.tofire = True
