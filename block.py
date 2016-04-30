@@ -8,7 +8,7 @@ class Block(pygame.sprite.Sprite):
 		pygame.sprite.Sprite.__init__(self)
 
 		self.gs = gs
-		self.image = pygame.image.load("brick.png")
+		self.image = pygame.image.load("imgs/brick.png")
 		self.rect = self.image.get_rect()
 		self.rect.topleft = (x,y)
 
