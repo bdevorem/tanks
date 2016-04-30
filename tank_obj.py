@@ -36,7 +36,6 @@ class tank(pygame.sprite.Sprite):
 			# can still come from center of tank since the 
 			# gun will be pointing in the same direction
 			
-			########################################################
 			fire_x, fire_y = pygame.mouse.get_pos()
 			angle = math.atan2(self.rect.centery-fire_y, fire_x-self.rect.centerx)
 			pellet_center = (self.rect.centerx+math.cos(angle)*24,self.rect.centery-math.sin(angle)*24)
@@ -94,26 +93,7 @@ class tank(pygame.sprite.Sprite):
 		
 		return collide
 
-
-	def checkCollision(self):
-#       if pygame.Rect.colliderect(self.rect, self.gs.player.rect):
-#           self.explode()
-#           self.gs.player.explode()
-#       if pygame.Rect.colliderect(self.rect, self.gs.teammate.rect):
-#           self.explode()
-#           self.gs.teammate.explode()
-#       for enemy in self.gs.enemies:
-#           if pygame.Rect.colliderect(self.rect, enemy.rect):
-#               self.explode()
-#               enemy.explode()
-		for pellet in self.gs.pellets:
-			if pygame.Rect.colliderect(self.rect, pellet.rect) and pellet.rect != self.rect:
-#               self.explode()
-#               pellet.explode()
-				pass
-
 	def explode(self):
-		self.gs.pellets.remove(self)
 		self = Explosion(self.gs)	
 
 
