@@ -21,9 +21,12 @@ class GameSpace(object):
 
 		self.size = width,height = (640,480)
 		self.screen = pygame.display.set_mode(self.size)
-		self.background = pygame.image.load("wood.png")
+		self.background = pygame.image.load("imgs/wood.png")
 		self.back_rect = self.background.get_rect()
-		
+		self.gun = pygame.image.load("imgs/gun.png")
+		self.gun_rect = self.gun.get_rect()
+		self.gun_rect.center = (100,200)
+
 		#2) Set up game objects
 		self.clock = pygame.time.Clock()
 		self.level = Level(self)
@@ -46,6 +49,7 @@ class GameSpace(object):
 			self.screen.blit(self.background, self.back_rect)
 			for block in self.blocks:
 				self.screen.blit(block.image, block.rect)
+			self.screen.blit(self.gun, self.gun_rect)
 			pygame.display.flip()
 
 if __name__ == '__main__':
