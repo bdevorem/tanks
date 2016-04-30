@@ -32,7 +32,7 @@ class tank(pygame.sprite.Sprite):
 			
 			#laser = Laser(math.atan2(self.rect.centery-self.fire_y,self.fire_x-self.rect.centerx), self.rect.center, self.gs)
 			#self.gs.lasers.append(laser)
-			print 'shoot'	
+			print('shoot')
 			#########################################################
 			# SOUND
 			#if pygame.mixer.music.get_busy() == False:
