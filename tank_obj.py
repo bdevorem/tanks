@@ -12,6 +12,9 @@ class tank(pygame.sprite.Sprite):
 		self.gs = gs
 		self.image = pygame.image.load("imgs/tank1.png")
 		self.orig_image = pygame.image.load("imgs/tank1.png")
+		# tank is a tad smaller than gun bc collision detecting
+		self.image = pygame.transform.scale(self.image, (40, 40))
+		self.image = pygame.transform.scale(self.orig_image, (40, 40))
 		self.rect = self.image.get_rect()
 		self.rect.center = (5,475)
 		self.fire_x = 0
