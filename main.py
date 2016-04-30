@@ -1,4 +1,5 @@
 #!/usr/bin/env python2
+
 # Elliott Runburg
 # Breanna Devore-McDonald
 # Tanks game
@@ -13,6 +14,7 @@ from pygame.locals import *
 from objects import *
 from level import Level
 from block import Block
+from tank_obj import tank
 
 class GameSpace(object):
 	def start(self):
@@ -32,6 +34,7 @@ class GameSpace(object):
 		self.level = Level(self)
 		self.objects = self.level.createObjects()
 		self.blocks = self.objects['Blocks']
+		self.tank1 = tank(self)
 
 		#3) Start game loop
 		while 1:
@@ -42,14 +45,23 @@ class GameSpace(object):
 			for event in pygame.event.get():
 				if event.type == QUIT:
 					sys.exit()
+				elif event.type == KEYDOWN:
+					self.tank1.move(event.key)
+				elif event.type == MOUSEBUTTONDOWN:
+					self.tank1.tofire = True
+					self.tank1.fire_x, self.tank1.fire_y = pygame.mouse.get_pos()
+				elif event.type == MOUSEBUTTONUP:
+					self.tank1.tofire = False
 
 			#6) Send ticks to objects
+			self.tank1.tick()
 
 			#7) Display game objects
 			self.screen.blit(self.background, self.back_rect)
 			for block in self.blocks:
 				self.screen.blit(block.image, block.rect)
 			self.screen.blit(self.gun, self.gun_rect)
+			self.screen.blit(self.tank1.image, self.tank1.rect)
 			pygame.display.flip()
 
 if __name__ == '__main__':
