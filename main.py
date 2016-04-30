@@ -15,6 +15,7 @@ from objects import *
 from level import Level
 from block import Block
 from tank_obj import tank
+from pellet import Pellet
 
 class GameSpace(object):
 	def start(self):
@@ -30,8 +31,12 @@ class GameSpace(object):
 		self.clock = pygame.time.Clock()
 		self.level = Level(self)
 		self.objects = self.level.createObjects()
+		#self.player = self.objects['Player 1']
+		#self.teammate = self.objects['Player 2']
+		#self.enemies = self.objects['Enemies']
 		self.blocks = self.objects['Blocks']
 		self.tank1 = tank(self)
+		self.pellets = []
 
 		#3) Start game loop
 		while 1:
@@ -52,11 +57,15 @@ class GameSpace(object):
 
 			#6) Send ticks to objects
 			self.tank1.tick()
+			for pellet in self.pellets:
+				pellet.tick()
 
 			#7) Display game objects
 			self.screen.blit(self.background, self.back_rect)
 			for block in self.blocks:
 				self.screen.blit(block.image, block.rect)
+			for pellet in self.pellets:
+				self.screen.blit(pellet.image, pellet.rect)
 			self.screen.blit(self.tank1.image, self.tank1.rect)
 			self.screen.blit(self.tank1.gun.image, self.tank1.gun.rect)
 			pygame.display.flip()
