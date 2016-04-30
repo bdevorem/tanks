@@ -3,6 +3,7 @@ import os
 import pygame
 import math
 from pygame.locals import *
+from explode import Explosion
 
 class Pellet(pygame.sprite.Sprite):
 	def __init__(self, source, angle, center, gs=None):
@@ -57,10 +58,10 @@ class Pellet(pygame.sprite.Sprite):
 #				enemy.explode()
 		for pellet in self.gs.pellets:
 			if pygame.Rect.colliderect(self.rect, pellet.rect) and pellet.rect != self.rect:
-#				self.explode()
-#				pellet.explode()
-				pass
+				self.explode()
+				pellet.explode()
+				#print 'pellet collision'
 
 	def explode(self):
 		self.gs.pellets.remove(self)
-		self = Explosion(self.gs)
+		self = Explosion(self.rect.center, self.gs)

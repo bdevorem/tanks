@@ -30,7 +30,7 @@ class Explosion(pygame.sprite.Sprite):
 		self.center = center
 		self.image = self.expl_imgs[self.curr_im]
 		self.rect = self.image.get_rect()
-		self.rect.center = self.center
+		self.rect.center = center
 		self.death_tick = 0
 
 	def tick(self):
