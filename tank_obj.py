@@ -37,7 +37,6 @@ class tank(pygame.sprite.Sprite):
 			# gun will be pointing in the same direction
 			
 			########################################################
-			# waiting for bullet class
 			fire_x, fire_y = pygame.mouse.get_pos()
 			angle = math.atan2(self.rect.centery-fire_y, fire_x-self.rect.centerx)
 			pellet_center = (self.rect.centerx+math.cos(angle)*24,self.rect.centery-math.sin(angle)*24)
@@ -55,16 +54,68 @@ class tank(pygame.sprite.Sprite):
 				self.gun.rotate(dx, dy)
 
 	def move(self, keycode):
-		self.gun.move(keycode)
+		"""
+		Called when keydown is detected in main
+		"""
+		#self.gun.move(keycode)
 
 		if keycode == 273:
-			self.rect = self.rect.move(0, -3)
+			# trial
+			if self.checkBlocks((0, -3)) is False:
+				self.rect = self.rect.move(0, -3)
+				self.gun.move((0,-3))
 		elif keycode == 274:
-			self.rect = self.rect.move(0, 3)
+			if self.checkBlocks((0, 3)) is False:
+				self.rect = self.rect.move(0, 3)
+				self.gun.move((0, 3))
 		elif keycode == 275:
-			self.rect = self.rect.move(3, 0)
+			if self.checkBlocks((3, 0)) is False:
+				self.rect = self.rect.move(3, 0)
+				self.gun.move((3, 0))
 		elif keycode == 276:
-			self.rect = self.rect.move(-3, 0)
+			if self.checkBlocks((-3, 0)) is False:
+				self.rect = self.rect.move(-3, 0)
+				self.gun.move((-3, 0))
+
+	def checkBlocks(self, movement):
+		"""
+		Return True if there is any overlap
+		"""
+		collide = False
+		self.temp_rect = self.rect.move(movement[0], 0)
+		for block in self.gs.blocks:
+			if pygame.Rect.colliderect(self.temp_rect, block.rect):
+				collide = True
+		
+		self.temp_rect = self.rect.move(0, movement[1])
+		for block in self.gs.blocks:
+			if pygame.Rect.colliderect(self.temp_rect, block.rect):
+				collide = True
+		
+		return collide
+
+
+	def checkCollision(self):
+#       if pygame.Rect.colliderect(self.rect, self.gs.player.rect):
+#           self.explode()
+#           self.gs.player.explode()
+#       if pygame.Rect.colliderect(self.rect, self.gs.teammate.rect):
+#           self.explode()
+#           self.gs.teammate.explode()
+#       for enemy in self.gs.enemies:
+#           if pygame.Rect.colliderect(self.rect, enemy.rect):
+#               self.explode()
+#               enemy.explode()
+		for pellet in self.gs.pellets:
+			if pygame.Rect.colliderect(self.rect, pellet.rect) and pellet.rect != self.rect:
+#               self.explode()
+#               pellet.explode()
+				pass
+
+	def explode(self):
+		self.gs.pellets.remove(self)
+		self = Explosion(self.gs)	
+
 
 class gun(pygame.sprite.Sprite):
 	def __init__(self, center=None, gs=None):
@@ -74,16 +125,9 @@ class gun(pygame.sprite.Sprite):
 		self.rect = self.image.get_rect()
 		self.rect.center = center
 
-	def move(self, keycode):
+	def move(self, center):
 		#print "made it"
-		if keycode == 273:
-			self.rect = self.rect.move(0, -3)
-		elif keycode == 274:
-			self.rect = self.rect.move(0, 3)
-		elif keycode == 275:
-			self.rect = self.rect.move(3, 0)
-		elif keycode == 276:
-			self.rect = self.rect.move(-3, 0)
+		self.rect = self.rect.move(center)
 
 	def rotate(self, dx, dy):
 		self.image = pygame.transform.rotate(self.orig_image, 
