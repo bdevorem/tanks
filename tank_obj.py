@@ -5,6 +5,7 @@ import pygame
 import math
 from pygame.locals import *
 from pellet import Pellet
+from explode import Explosion
 
 class tank(pygame.sprite.Sprite):
 	def __init__(self, gs=None):
@@ -94,7 +95,7 @@ class tank(pygame.sprite.Sprite):
 		return collide
 
 	def explode(self):
-		self = Explosion(self.gs)	
+		self = Explosion(self.rect.center, self.gs)	
 
 
 class gun(pygame.sprite.Sprite):
