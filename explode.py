@@ -43,9 +43,11 @@ class Explosion(pygame.sprite.Sprite):
 			self.image = self.expl_imgs[self.curr_im]
 			self.rect = self.image.get_rect()
 			self.rect.center = self.center
+			
+			if self.curr_im == 10:
+				if not self.gs.tank1_life:
+					self.gs.endgame = True
+
 		elif self.death_tick % 8 == 0 and self.curr_im >= 16:
 			self.gs.explosions.remove(self)
-			if not self.gs.tank1_life:
-				self.gs.endgame = True
-
-
+		

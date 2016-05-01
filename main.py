@@ -78,14 +78,14 @@ class GameSpace(object):
 			#7) Display game objects
 			if not self.endgame:
 				self.screen.blit(self.background, self.back_rect)
+				self.screen.blit(self.tank1.image, self.tank1.rect)
+				self.screen.blit(self.tank1.gun.image,self.tank1.gun.rect)
 				for block in self.blocks:
 					self.screen.blit(block.image, block.rect)
 				for pellet in self.pellets:
 					self.screen.blit(pellet.image, pellet.rect)
 				for expl in self.explosions:
 					self.screen.blit(expl.image, expl.rect)
-				self.screen.blit(self.tank1.image, self.tank1.rect)
-				self.screen.blit(self.tank1.gun.image,self.tank1.gun.rect)
 			else:
 				self.background = pygame.image.load("imgs/gameover.png")
 				self.back_rect = self.background.get_rect()
