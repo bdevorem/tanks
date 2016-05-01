@@ -11,6 +11,6 @@ class Block(pygame.sprite.Sprite):
 		self.image = pygame.image.load("imgs/brick.png")
 		self.rect = self.image.get_rect()
 		self.rect.topleft = (x,y)
-
+	
 	def tick(self):
 		pass
