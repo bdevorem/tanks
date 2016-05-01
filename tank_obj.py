@@ -97,8 +97,10 @@ class tank(pygame.sprite.Sprite):
 		return collide
 
 	def explode(self):
-		self = Explosion(self.rect.center, self.gs)	
-
+		if self.gs.tank1_life:
+			self.gs.tank1_life = False
+			center = deepcopy(self.rect.center)
+			self.gs.explosions.append(Explosion(center, self.gs))
 
 class gun(pygame.sprite.Sprite):
 	def __init__(self, center=None, gs=None):

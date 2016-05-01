@@ -39,6 +39,7 @@ class GameSpace(object):
 		self.tank1 = tank(self)
 		self.pellets = []
 		self.explosions = []
+		self.tank1_life = True
 
 		#3) Start game loop
 		hold = False
@@ -74,15 +75,21 @@ class GameSpace(object):
 				expl.tick()
 	
 			#7) Display game objects
-			self.screen.blit(self.background, self.back_rect)
-			for block in self.blocks:
-				self.screen.blit(block.image, block.rect)
-			for pellet in self.pellets:
-				self.screen.blit(pellet.image, pellet.rect)
-			for expl in self.explosions:
-				self.screen.blit(expl.image, expl.rect)
-			self.screen.blit(self.tank1.image, self.tank1.rect)
-			self.screen.blit(self.tank1.gun.image, self.tank1.gun.rect)
+			if self.tank1_life:
+				self.screen.blit(self.background, self.back_rect)
+				for block in self.blocks:
+					self.screen.blit(block.image, block.rect)
+				for pellet in self.pellets:
+					self.screen.blit(pellet.image, pellet.rect)
+				for expl in self.explosions:
+					self.screen.blit(expl.image, expl.rect)
+				self.screen.blit(self.tank1.image, self.tank1.rect)
+				self.screen.blit(self.tank1.gun.image,self.tank1.gun.rect)
+			else:
+				self.background = pygame.image.load("imgs/wood.png")
+				self.back_rect = self.background.get_rect()
+				self.screen.blit(self.background, self.back_rect)
+
 			pygame.display.flip()
 
 if __name__ == '__main__':

@@ -58,10 +58,9 @@ class Pellet(pygame.sprite.Sprite):
 			
 
 	def checkCollision(self):
-		if pygame.Rect.colliderect(self.rect, self.gs.tank1.rect):
-			pass
-#			self.explode()
-#			self.gs.tank1.explode()
+		if pygame.Rect.colliderect(self.rect, self.gs.tank1.rect):		
+			self.explode()
+			self.gs.tank1.explode()
 #		if pygame.Rect.colliderect(self.rect, self.gs.teammate.rect):
 #			self.explode()
 #			self.gs.teammate.explode()
