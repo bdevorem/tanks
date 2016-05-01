@@ -80,7 +80,7 @@ class GameSpace(object):
 			for pellet in self.pellets:
 				self.screen.blit(pellet.image, pellet.rect)
 			for expl in self.explosions:
-				self.screen.blit(expl.image, pellet.rect)
+				self.screen.blit(expl.image, expl.rect)
 			self.screen.blit(self.tank1.image, self.tank1.rect)
 			self.screen.blit(self.tank1.gun.image, self.tank1.gun.rect)
 			pygame.display.flip()

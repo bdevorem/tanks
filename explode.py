@@ -3,6 +3,7 @@ import os
 import pygame
 import math
 from pygame.locals import *
+from copy import deepcopy
 
 class Explosion(pygame.sprite.Sprite):
 	def __init__(self, center, gs=None):
@@ -26,14 +27,15 @@ class Explosion(pygame.sprite.Sprite):
 						pygame.image.load("imgs/explosion/frames013a.png"),
 						pygame.image.load("imgs/explosion/frames014a.png"),
 						pygame.image.load("imgs/explosion/frames015a.png"),
-						pygame.image.load("imgs/wood.png")
-]
+						pygame.image.load("imgs/wood.png")]
+
 		self.curr_im = 0
-		self.center = center
+		self.center = deepcopy(center)
 		self.image = self.expl_imgs[self.curr_im]
 		self.rect = self.image.get_rect()
-		self.rect.center = center
+		self.rect.center = self.center
 		self.death_tick = 0
+		print(self.rect.center)
 		#print 'init for explosion'
 
 	def tick(self):
@@ -44,7 +46,8 @@ class Explosion(pygame.sprite.Sprite):
 			self.image = self.expl_imgs[self.curr_im]
 			self.rect = self.image.get_rect()
 			self.rect.center = self.center
-		elif self.death_tick % 8 == 0 and self.curr_im > 16:
+			print(self.rect.center)
+		elif self.death_tick % 8 == 0 and self.curr_im >= 16:
 			self.gs.explosions.remove(self)
 
 

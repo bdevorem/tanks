@@ -4,6 +4,7 @@ import pygame
 import math
 from pygame.locals import *
 from explode import Explosion
+from copy import deepcopy
 
 class Pellet(pygame.sprite.Sprite):
 	def __init__(self, source, angle, center, gs=None):
@@ -21,9 +22,10 @@ class Pellet(pygame.sprite.Sprite):
 		self.exploded = False
 
 	def tick(self):
-		self.checkBounce()
-		self.move()
-		self.checkCollision()
+		if not self.exploded:
+			self.checkBounce()
+			self.move()
+			self.checkCollision()
 
 	def move(self):
 		self.rect = self.rect.move(self.dx, self.dy)
@@ -77,6 +79,6 @@ class Pellet(pygame.sprite.Sprite):
 		if not self.exploded:
 			self.gs.pellets.remove(self)
 			self.exploded = True
-			self.gs.explosions.append(Explosion(self.rect.center, self.gs))
-
+			expl_center = deepcopy(self.rect.center)
+			self.gs.explosions.append(Explosion(expl_center, self.gs))
 
