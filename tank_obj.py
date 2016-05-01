@@ -40,7 +40,7 @@ class tank(pygame.sprite.Sprite):
 
 			fire_x, fire_y = pygame.mouse.get_pos()
 			angle = math.atan2(self.rect.centery-fire_y, fire_x-self.rect.centerx)
-			pellet_center = (self.rect.centerx+math.cos(angle)*24,self.rect.centery-math.sin(angle)*24)
+			pellet_center = (self.rect.centerx+math.cos(angle)*36,self.rect.centery-math.sin(angle)*36)
 			pellet = Pellet(self, angle, pellet_center, self.gs)
 			self.gs.pellets.append(pellet)
 
