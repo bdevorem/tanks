@@ -86,7 +86,7 @@ class GameSpace(object):
 				self.screen.blit(self.tank1.image, self.tank1.rect)
 				self.screen.blit(self.tank1.gun.image,self.tank1.gun.rect)
 			else:
-				self.background = pygame.image.load("imgs/wood.png")
+				self.background = pygame.image.load("imgs/gameover.png")
 				self.back_rect = self.background.get_rect()
 				self.screen.blit(self.background, self.back_rect)
 
