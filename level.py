@@ -4,6 +4,8 @@ import pygame
 import math
 from pygame.locals import *
 from block import Block
+import random
+from enemy import Enemy
 
 class Level():
 	def __init__(self, gs=None):
@@ -27,5 +29,13 @@ class Level():
 			blocks.append(block2)
 
 		objects['Blocks'] = blocks
+		
+		####################################################
+
+		enemies = []
+		for n in range(random.randint(1, 6)):
+			enemies.append(Enemy(self.gs))
+
+		objects['Enemies'] = enemies
 
 		return objects

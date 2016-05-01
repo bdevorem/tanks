@@ -17,6 +17,7 @@ from block import Block
 from tank_obj import tank
 from pellet import Pellet
 from explode import Explosion
+from enemy import Enemy
 
 class GameSpace(object):
 	def start(self):
@@ -34,7 +35,7 @@ class GameSpace(object):
 		self.objects = self.level.createObjects()
 		#self.player = self.objects['Player 1']
 		#self.teammate = self.objects['Player 2']
-		#self.enemies = self.objects['Enemies']
+		self.enemies = self.objects['Enemies']
 		self.blocks = self.objects['Blocks']
 		self.tank1 = tank(self)
 		self.pellets = []
@@ -74,12 +75,16 @@ class GameSpace(object):
 				pellet.tick()
 			for expl in self.explosions:
 				expl.tick()
-	
+			for enemy in self.enemies:
+				enemy.tick()
+
 			#7) Display game objects
 			if not self.endgame:
 				self.screen.blit(self.background, self.back_rect)
 				self.screen.blit(self.tank1.image, self.tank1.rect)
 				self.screen.blit(self.tank1.gun.image,self.tank1.gun.rect)
+				for enemy in self.enemies:
+					self.screen.blit(enemy.image, enemy.rect)
 				for block in self.blocks:
 					self.screen.blit(block.image, block.rect)
 				for pellet in self.pellets:
