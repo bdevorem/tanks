@@ -6,6 +6,7 @@ import math
 from pygame.locals import *
 from pellet import Pellet
 from explode import Explosion
+from copy import deepcopy
 
 class tank(pygame.sprite.Sprite):
 	def __init__(self, gs=None):
