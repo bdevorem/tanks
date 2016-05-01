@@ -40,6 +40,7 @@ class GameSpace(object):
 		self.pellets = []
 		self.explosions = []
 		self.tank1_life = True
+		self.endgame = False
 
 		#3) Start game loop
 		hold = False
@@ -75,7 +76,7 @@ class GameSpace(object):
 				expl.tick()
 	
 			#7) Display game objects
-			if self.tank1_life:
+			if not self.endgame:
 				self.screen.blit(self.background, self.back_rect)
 				for block in self.blocks:
 					self.screen.blit(block.image, block.rect)
