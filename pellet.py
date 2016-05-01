@@ -14,6 +14,7 @@ class Pellet(pygame.sprite.Sprite):
 		self.source = source
 		self.angle = angle
 		self.image = pygame.image.load("imgs/pellet.png")
+		self.image = pygame.transform.scale(self.image, (10,10))
 		self.rect = self.image.get_rect()
 		self.rect.center = center
 		self.bounce = 0
@@ -68,11 +69,10 @@ class Pellet(pygame.sprite.Sprite):
 #			if pygame.Rect.colliderect(self.rect, enemy.rect):
 #				self.explode()
 #				enemy.explode()
-#		for pellet in self.gs.pellets:
-#			if pygame.Rect.colliderect(self.rect, pellet.rect) and pellet.rect != self.rect:
-#				self.explode()
-#				pellet.explode()
-				#print 'pellet collision'
+		for pellet in self.gs.pellets:
+			if pygame.Rect.colliderect(self.rect, pellet.rect) and pellet.rect != self.rect:
+				self.explode()
+				pellet.explode()
 
 	def explode(self):
 		if not self.exploded:

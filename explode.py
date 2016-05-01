@@ -38,7 +38,7 @@ class Explosion(pygame.sprite.Sprite):
 
 	def tick(self):
 		self.death_tick += 1
-		if self.death_tick % 8 == 0 and self.curr_im < 16:
+		if self.death_tick % 5 == 0 and self.curr_im < 16:
 			self.curr_im += 1
 			self.image = self.expl_imgs[self.curr_im]
 			self.rect = self.image.get_rect()
