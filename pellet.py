@@ -41,14 +41,14 @@ class Pellet(pygame.sprite.Sprite):
 			if pygame.Rect.colliderect(self.temp_rect, block.rect) and self.bounce == 0:
 				horiz_coll = True
 			elif pygame.Rect.colliderect(self.temp_rect, block.rect):
-				self.explode()
+				self.explode(True)
 		self.temp_rect = self.rect.copy()
 		self.temp_rect = self.rect.move(0, self.dy)
 		for block in self.gs.blocks:
 			if pygame.Rect.colliderect(self.temp_rect, block.rect) and self.bounce == 0:
 				vert_coll = True
 			elif pygame.Rect.colliderect(self.temp_rect, block.rect):
-				self.explode()
+				self.explode(True)
 		if horiz_coll:
 			self.dx = -1 * self.dx
 		if vert_coll:
@@ -60,24 +60,24 @@ class Pellet(pygame.sprite.Sprite):
 
 	def checkCollision(self):
 		if pygame.Rect.colliderect(self.rect, self.gs.tank1.rect):		
-			self.explode()
+			self.explode(False)
 			self.gs.tank1.explode()
 #		if pygame.Rect.colliderect(self.rect, self.gs.teammate.rect):
 #			self.explode()
 #			self.gs.teammate.explode()
 		for enemy in self.gs.enemies:
 			if pygame.Rect.colliderect(self.rect, enemy.rect):
-				self.explode()
+				self.explode(False)
 				enemy.explode()
 		for pellet in self.gs.pellets:
 			if pygame.Rect.colliderect(self.rect, pellet.rect) and pellet.rect != self.rect:
-				self.explode()
-				pellet.explode()
+				self.explode(True)
+				pellet.explode(False)
 
-	def explode(self):
+	def explode(self, graphics):
 		if not self.exploded:
 			self.gs.pellets.remove(self)
 			self.exploded = True
-			expl_center = deepcopy(self.rect.center)
-			self.gs.explosions.append(Explosion(expl_center, self.gs))
-
+			if graphics:
+				expl_center = deepcopy(self.rect.center)
+				self.gs.explosions.append(Explosion(expl_center, self.gs))
