@@ -44,8 +44,7 @@ class Enemy(pygame.sprite.Sprite):
 				horiz_coll = True
 		for enemy in self.gs.enemies:
 			if enemy is not self:
-				if pygame.Rect.colliderect(self.temp_rect, block.rect):
-					print 'here'
+				if pygame.Rect.colliderect(self.temp_rect, enemy.rect):
 					horiz_coll = True
 	
 		self.temp_rect = self.rect.copy()
@@ -55,7 +54,7 @@ class Enemy(pygame.sprite.Sprite):
 				vert_coll = True
 		for enemy in self.gs.enemies:
 			if enemy is not self:
-				if pygame.Rect.colliderect(self.temp_rect, block.rect):
+				if pygame.Rect.colliderect(self.temp_rect, enemy.rect):
 					vert_coll = True
 
 		if horiz_coll:
@@ -63,6 +62,7 @@ class Enemy(pygame.sprite.Sprite):
 		if vert_coll:
 			self.dy = -1 * self.dy
 		if (horiz_coll or vert_coll):
+			self.move()
 			self.move()
 
 	def explode(self):
