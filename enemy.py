@@ -29,12 +29,25 @@ class Enemy(pygame.sprite.Sprite):
 		self.exploded = False
 		self.tofire = False
 		self.gun = Gun(self.rect.center, self.gs)
-
+		self.fire_interval = random.randint(100, 500)
+		self.fire_timer = 0
 
 	def tick(self):
 		if not self.exploded:
 			self.checkBounce()
 			self.move(self.gs.tank1)
+
+			self.fire_timer += 1
+			if self.fire_timer == self.fire_interval:
+				self.fire_timer = 0
+				fire_x, fire_y = self.gs.tank1.rect.center
+				angle = math.atan2(self.rect.centery-fire_y, 
+									fire_x-self.rect.centerx)
+				pellet_center = (self.rect.centerx+math.cos(angle)*36,
+							self.rect.centery-math.sin(angle)*36)
+				pellet = Pellet(self, angle, pellet_center, self.gs)
+				self.gs.pellets.append(pellet)
+
 
 	def move(self, tank1):
 		mx, my = tank1.rect.center
