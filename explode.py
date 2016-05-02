@@ -5,12 +5,7 @@ import math
 from pygame.locals import *
 from copy import deepcopy
 
-class Explosion(pygame.sprite.Sprite):
-	def __init__(self, center, gs=None):
-		pygame.sprite.Sprite.__init__(self)
-
-		self.gs = gs
-		self.expl_imgs = [pygame.image.load("imgs/explosion/frames016a.png"),
+expl_imgs = [pygame.image.load("imgs/explosion/frames016a.png"),
 						pygame.image.load("imgs/explosion/frames000a.png"),
 						pygame.image.load("imgs/explosion/frames001a.png"),
 						pygame.image.load("imgs/explosion/frames002a.png"),
@@ -29,9 +24,15 @@ class Explosion(pygame.sprite.Sprite):
 						pygame.image.load("imgs/explosion/frames015a.png"),
 						pygame.image.load("imgs/wood.png")]
 
+class Explosion(pygame.sprite.Sprite):
+	def __init__(self, center, gs=None):
+		pygame.sprite.Sprite.__init__(self)
+
+		self.gs = gs
+
 		self.curr_im = 0
 		self.center = deepcopy(center)
-		self.image = self.expl_imgs[self.curr_im]
+		self.image = expl_imgs[self.curr_im]
 		self.rect = self.image.get_rect()
 		self.rect.center = self.center
 		self.death_tick = 0
@@ -40,7 +41,7 @@ class Explosion(pygame.sprite.Sprite):
 		self.death_tick += 1
 		if self.death_tick % 5 == 0 and self.curr_im < 16:
 			self.curr_im += 1
-			self.image = self.expl_imgs[self.curr_im]
+			self.image = expl_imgs[self.curr_im]
 			self.rect = self.image.get_rect()
 			self.rect.center = self.center
 			
