@@ -7,13 +7,16 @@ from pellet import Pellet
 from explode import Explosion
 import random
 from gun import Gun
+from copy import deepcopy
 
 class Enemy(pygame.sprite.Sprite):
-	def __init__(self, gs=None):
+	def __init__(self, gs=None, center=None):
 		pygame.sprite.Sprite.__init__(self)
 		self.gs = gs
+
 		self.angle = random.uniform(1, 360)
-		self.center = (random.randint(50, 300), random.randint(50, 300))
+		
+		self.center = center
 
 		self.image = pygame.image.load("imgs/tank3.png")
 		self.orig_image = pygame.image.load("imgs/tank3.png")

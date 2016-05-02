@@ -65,10 +65,10 @@ class Pellet(pygame.sprite.Sprite):
 #		if pygame.Rect.colliderect(self.rect, self.gs.teammate.rect):
 #			self.explode()
 #			self.gs.teammate.explode()
-#		for enemy in self.gs.enemies:
-#			if pygame.Rect.colliderect(self.rect, enemy.rect):
-#				self.explode()
-#				enemy.explode()
+		for enemy in self.gs.enemies:
+			if pygame.Rect.colliderect(self.rect, enemy.rect):
+				self.explode()
+				enemy.explode()
 		for pellet in self.gs.pellets:
 			if pygame.Rect.colliderect(self.rect, pellet.rect) and pellet.rect != self.rect:
 				self.explode()

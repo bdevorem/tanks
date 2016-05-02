@@ -10,6 +10,7 @@ from enemy import Enemy
 class Level():
 	def __init__(self, gs=None):
 		self.gs = gs
+		self.x = 10
 
 	def createObjects(self):
 		objects = {}
@@ -34,7 +35,10 @@ class Level():
 
 		enemies = []
 		for n in range(random.randint(1, 6)):
-			enemies.append(Enemy(self.gs))
+			self.x += 50
+			x = self.x
+			y = random.randint(50, 300)
+			enemies.append(Enemy(self.gs, (x, y)))
 
 		objects['Enemies'] = enemies
 
