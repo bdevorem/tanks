@@ -27,8 +27,13 @@ class tank(pygame.sprite.Sprite):
 		self.tofire = False
 		
 		self.gun = Gun(self.rect.center, self.gs)
-	
+		self.hold = False
+		self.key = 0
+
 	def tick(self):
+		if self.hold and self.key is not 0:
+			self.move(self.key)
+
 		mx, my = pygame.mouse.get_pos()
 		dx = mx - self.rect.centerx
 		dy = self.rect.centery - my

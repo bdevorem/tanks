@@ -53,16 +53,18 @@ class GameSpace(object):
 			for event in pygame.event.get():
 				if event.type == QUIT:
 					sys.exit()
-				#elif event.type == KEYUP:
-				#	hold = False
+				elif event.type == KEYUP:
+					self.tank1.hold = False
+					self.tank1.key = 0
 				#	print 'keyup'
 				#elif hold is True:
 				#	print 'yes'
 				#	self.tank1.move(key)
 				elif event.type == KEYDOWN:
-				#	hold = True
+					self.tank1.hold = True
+					self.tank1.key = event.key
 				#	key = event.key
-					self.tank1.move(event.key)
+				#	self.tank1.move(event.key)
 				elif event.type == MOUSEBUTTONDOWN:
 					self.tank1.tofire = True
 					self.tank1.fire_x, self.tank1.fire_y = pygame.mouse.get_pos()
