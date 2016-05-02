@@ -85,6 +85,7 @@ class GameSpace(object):
 				self.screen.blit(self.tank1.gun.image,self.tank1.gun.rect)
 				for enemy in self.enemies:
 					self.screen.blit(enemy.image, enemy.rect)
+					self.screen.blit(enemy.gun.image, enemy.gun.rect)
 				for block in self.blocks:
 					self.screen.blit(block.image, block.rect)
 				for pellet in self.pellets:

@@ -8,6 +8,7 @@ from pellet import Pellet
 from explode import Explosion
 from copy import deepcopy
 from gun import Gun
+
 class tank(pygame.sprite.Sprite):
 	def __init__(self, gs=None):
 		pygame.sprite.Sprite.__init__(self)

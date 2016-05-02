@@ -35,6 +35,7 @@ class Enemy(pygame.sprite.Sprite):
 
 	def move(self):
 		self.rect = self.rect.move(self.dx, self.dy)
+		self.gun.move((self.dx, self.dy))
 
 	def checkBounce(self):
 		orig_center = self.rect.center
