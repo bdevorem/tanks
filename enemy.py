@@ -12,7 +12,7 @@ class Enemy(pygame.sprite.Sprite):
 		pygame.sprite.Sprite.__init__(self)
 		self.gs = gs
 		self.angle = random.uniform(1, 360)
-		self.center = (random.randint(1, 300), random.randint(1, 300))
+		self.center = (random.randint(50, 300), random.randint(50, 300))
 
 		self.image = pygame.image.load("imgs/tank3.png")
 		self.orig_image = pygame.image.load("imgs/tank3.png")
@@ -20,8 +20,8 @@ class Enemy(pygame.sprite.Sprite):
 		self.orig_image = pygame.transform.scale(self.orig_image, (40, 40))
 		self.rect = self.image.get_rect()
 		self.rect.center = self.center
-		self.dx = math.cos(self.angle)*5
-		self.dy = math.sin(self.angle)*-5
+		self.dx = math.cos(self.angle)*2
+		self.dy = math.sin(self.angle)*-2
 		self.exploded = False
 
 	def tick(self):
@@ -42,12 +42,21 @@ class Enemy(pygame.sprite.Sprite):
 		for block in self.gs.blocks:
 			if pygame.Rect.colliderect(self.temp_rect, block.rect):
 				horiz_coll = True
-		
+		for enemy in self.gs.enemies:
+			if enemy is not self:
+				if pygame.Rect.colliderect(self.temp_rect, block.rect):
+					print 'here'
+					horiz_coll = True
+	
 		self.temp_rect = self.rect.copy()
 		self.temp_rect = self.rect.move(0, self.dy)
 		for block in self.gs.blocks:
 			if pygame.Rect.colliderect(self.temp_rect, block.rect):
 				vert_coll = True
+		for enemy in self.gs.enemies:
+			if enemy is not self:
+				if pygame.Rect.colliderect(self.temp_rect, block.rect):
+					vert_coll = True
 
 		if horiz_coll:
 			self.dx = -1 * self.dx
