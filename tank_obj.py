@@ -34,7 +34,7 @@ class tank(pygame.sprite.Sprite):
 		if self.fire_timer != 0:
 			self.fire_timer -= 1
 		if self.tofire == True and self.fire_timer == 0:
-			self.fire_timer = 10
+			self.fire_timer = 60
 			# can still come from center of tank since the 
 			# gun will be pointing in the same direction
 			# ^^ jk because of collision detection

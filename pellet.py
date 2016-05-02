@@ -18,9 +18,12 @@ class Pellet(pygame.sprite.Sprite):
 		self.rect = self.image.get_rect()
 		self.rect.center = center
 		self.bounce = 0
-		self.dx = math.cos(self.angle)*5
-		self.dy = math.sin(self.angle)*-5
+		self.dx = math.cos(self.angle)*3
+		self.dy = math.sin(self.angle)*-3
 		self.exploded = False
+
+		self.x = self.rect.centerx
+		self.y = self.rect.centery
 
 	def tick(self):
 		if not self.exploded:
@@ -29,21 +32,23 @@ class Pellet(pygame.sprite.Sprite):
 			self.checkCollision()
 
 	def move(self):
-		self.rect = self.rect.move(self.dx, self.dy)
+		self.x += self.dx
+		self.y += self.dy
+		self.rect.center = (self.x, self.y)
 
 	def checkBounce(self):
 		orig_center = self.rect.center
 		self.temp_rect = self.rect.copy()
 		horiz_coll = False
 		vert_coll = False
-		self.temp_rect = self.temp_rect.move(self.dx, 0)
+		self.temp_rect = self.temp_rect.move((int)(self.dx), 0)
 		for block in self.gs.blocks:
 			if pygame.Rect.colliderect(self.temp_rect, block.rect) and self.bounce == 0:
 				horiz_coll = True
 			elif pygame.Rect.colliderect(self.temp_rect, block.rect):
 				self.explode()
 		self.temp_rect = self.rect.copy()
-		self.temp_rect = self.rect.move(0, self.dy)
+		self.temp_rect = self.rect.move(0, (int)(self.dy))
 		for block in self.gs.blocks:
 			if pygame.Rect.colliderect(self.temp_rect, block.rect) and self.bounce == 0:
 				vert_coll = True
