@@ -31,11 +31,18 @@ class Enemy(pygame.sprite.Sprite):
 	def tick(self):
 		if not self.exploded:
 			self.checkBounce()
-			self.move()
+			self.move(self.gs.tank1)
 
-	def move(self):
+	def move(self, tank1):
+		mx, my = tank1.rect.center
+		dx = mx - self.rect.centerx
+		dy = self.rect.centery - my
+
 		self.rect = self.rect.move(self.dx, self.dy)
 		self.gun.move((self.dx, self.dy))
+
+		if dx != 0:
+			self.gun.rotate(dx, dy)
 
 	def checkBounce(self):
 		orig_center = self.rect.center
@@ -67,8 +74,8 @@ class Enemy(pygame.sprite.Sprite):
 		if vert_coll:
 			self.dy = -1 * self.dy
 		if (horiz_coll or vert_coll):
-			self.move()
-			self.move()
+			self.move(self.gs.tank1)
+			self.move(self.gs.tank1)
 
 	def explode(self):
 		if not self.exploded:
