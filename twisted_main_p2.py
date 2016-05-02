@@ -68,32 +68,71 @@ class GameSpace(object):
 			if event.type == QUIT:
 				sys.exit()
 			elif event.type == KEYUP:
-				self.tank.hold = False
-				self.tank.key = 0
+				tank.hold = False
+				tank.key = 0
 			#	print 'keyup'
 			#elif hold is True:
 			#	print 'yes'
 			#	self.tank1.move(key)
 			elif event.type == KEYDOWN:
 				if event.key == 32:
-					self.tank.tofire = True
-					self.tank.fire_x, self.tank.fire_y = mouse
+					tank.tofire = True
+					tank.fire_x, tank.fire_y = mouse
 				else:
-					self.tank.hold = True
-					self.tank.key = event.key
+					tank.hold = True
+					tank.key = event.key
 			#	key = event.key
 			#	self.tank1.move(event.key)
 			elif event.type == MOUSEBUTTONDOWN:
-				self.tank.tofire = True
-				self.tank.fire_x, self.tank.fire_y = mouse
+				tank.tofire = True
+				tank.fire_x, tank.fire_y = mouse
 			elif event.type == MOUSEBUTTONUP:
-				self.tank.tofire = False
+				tank.tofire = False
+
+	def handleRemoteEvents(self, tank, events, mouse):
+		for event in events:
+			if event['type'] == 'quit':
+				sys.exit()
+			elif event['type'] == 'keyup':
+				tank.hold = False
+				tank.key = 0
+			elif event['type'] == 'keydown':
+				if event['key'] == 32:
+					tank.tofire = True
+					tank.fire_x, tank.fire_y = mouse
+				else:
+					tank.hold = True
+					tank.key = event['key']
+			elif event['type'] == 'mousedown':
+				tank.tofire = True
+				tank.fire_x, tank.fire_y = mouse
+			elif event['type'] == 'mouseup':
+				tank.tofire = False
+
+	def packageEvents(self, events):
+		evs = []
+		for event in events:
+			ev = {}
+			if event.type == QUIT:
+				ev['type'] = 'quit'
+			elif event.type == KEYUP:
+				ev['type'] = 'keyup'
+				ev['key'] = event.key
+			elif event.type == KEYDOWN:
+				ev['type'] = 'keydown'
+				ev['key'] = event.key
+			elif event.type == MOUSEBUTTONDOWN:
+				ev['type'] = 'mousedown'
+			elif event.type == MOUSEBUTTONUP:
+				ev['type'] = 'mouseup'
+			evs.append(ev)
+		return evs
 
 	def tick(self):
 		state = {}
 		state['mouse_pos'] = pygame.mouse.get_pos()
 		events = pygame.event.get()
-		state['events'] = events
+		state['events'] = self.packageEvents(events)
 		self.sendState(state)
 
 		self.handleEvents(self.tank1, events, pygame.mouse.get_pos())
@@ -115,6 +154,8 @@ class GameSpace(object):
 				if self.tank1_life:
 					self.screen.blit(self.tank1.image, self.tank1.rect)
 					self.screen.blit(self.tank1.gun.image,self.tank1.gun.rect)
+					self.screen.blit(self.teammate.image, self.teammate.rect)
+					self.screen.blit(self.teammate.gun.image, self.teammate.gun.rect)
 				for enemy in self.enemies:
 					self.screen.blit(enemy.image, enemy.rect)
 					self.screen.blit(enemy.gun.image, enemy.gun.rect)
@@ -140,13 +181,14 @@ class GameSpace(object):
 		try:
 			mouse = self.teammate_state['mouse']
 			events = self.teammate_state['events']
-			handleEvents(self.teammate, events, mouse)
+			self.teammate.mx, self.teammate.my = self.teammate_state['mouse']
+			handleRemoteEvents(self.teammate, events, mouse)
 		except Exception as ex:
 			pass
 
 	def sendState(self, state):
 		s = pickle.dumps(state)
-		self.cf.send(s)
+		self.cf.conn.send(s)
 
 if __name__ == '__main__':
 	gs = GameSpace()

@@ -13,6 +13,7 @@ class ServerConnFactory(Factory):
 	def buildProtocol(self, addr):
 		self.addr = addr
 		self.conn = ServerConnection(addr, self.gs)
+		return self.conn
 
 class ServerConnection(Protocol):
 	def __init__(self, addr, gs):
@@ -22,12 +23,11 @@ class ServerConnection(Protocol):
 	def connectionMade(self):
 		print "connection made"
 		self.gs.start()
-#		lc = LoopingCall(self.gs.tick())
-#		lc.start(1/60)
+		lc = LoopingCall(self.gs.tick)
+		lc.start(1/60)
 
 	def dataReceived(self, data):
-		print "data received", data
-#		self.gs.addData(data)
+		self.gs.addData(data)
 
 	def send(self, data):
 		self.transport.write(data)
@@ -42,6 +42,7 @@ class ClientConnFactory(ClientFactory):
 	def buildProtocol(self, addr):
 		self.addr = addr
 		self.conn = ClientConnection(addr, self.gs)
+		return self.conn
 
 class ClientConnection(Protocol):
 	def __init__(self, addr, gs):
@@ -50,13 +51,12 @@ class ClientConnection(Protocol):
 
 	def connectionMade(self):
 		print "connection made"
-#		self.gs.start()
-#		lc = LoopingCall(self.gs.tick())
-#		lc.start(1/60)
+		self.gs.start()
+		lc = LoopingCall(self.gs.tick)
+		lc.start(1/60)
 
 	def dataReceived(self, data):
-		print "data received", data
-#		self.gs.addData(data)
+		self.gs.addData(data)
 
 	def send(self, data):
 		self.transport.write(data)
