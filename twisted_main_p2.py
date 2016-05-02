@@ -43,16 +43,16 @@ class GameSpace(object):
 		self.background = pygame.image.load("imgs/wood.png")
 		self.back_rect = self.background.get_rect()
 
-		self.cf = ServerConnFactory(self)	
-		reactor.listenTCP(CLIENT_PORT, self.cf)
+		self.cf = ClientConnFactory(self)	
+		reactor.connectTCP(CLIENT_HOST, CLIENT_PORT, self.cf)
 		reactor.run()
 
 	def start(self):
 		#2) Set up game objects
 		self.level = Level(self)
 		self.objects = self.level.createObjects()
-		self.tank1 = self.objects['Player 1']
-		self.teammate = self.objects['Player 2']
+		self.tank1 = self.objects['Player 2']
+		self.teammate = self.objects['Player 1']
 		self.enemies = self.objects['Enemies']
 		self.blocks = self.objects['Blocks']
 		self.pellets = []
@@ -114,9 +114,7 @@ class GameSpace(object):
 				self.screen.blit(self.background, self.back_rect)
 				if self.tank1_life:
 					self.screen.blit(self.tank1.image, self.tank1.rect)
-					self.screen.blit(self.tank1.gun.image,self.tank1.gun.rect)	
-					self.screen.blit(self.teammate.image, self.teammate.rect)
-					self.screen.blit(self.teammate.gun.image,self.teammate.gun.rect)
+					self.screen.blit(self.tank1.gun.image,self.tank1.gun.rect)
 				for enemy in self.enemies:
 					self.screen.blit(enemy.image, enemy.rect)
 					self.screen.blit(enemy.gun.image, enemy.gun.rect)

@@ -6,6 +6,7 @@ from pygame.locals import *
 from block import Block
 import random
 from enemy import Enemy
+from tank_obj import tank
 
 class Level():
 	def __init__(self, gs=None):
@@ -14,8 +15,8 @@ class Level():
 
 	def createObjects(self):
 		objects = {}
-		#objects['Player 1'] = PlayerTank()
-		#objects['Player 2'] = PlayerTank()
+		objects['Player 1'] = tank((55, 400), self.gs)
+		objects['Player 2'] = tank((400, 55), self.gs)
 
 		blocks = []
 		for y in range(0,(int)((self.gs.size[1])/32)):
