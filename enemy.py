@@ -6,6 +6,7 @@ from pygame.locals import *
 from pellet import Pellet
 from explode import Explosion
 import random
+from gun import Gun
 
 class Enemy(pygame.sprite.Sprite):
 	def __init__(self, gs=None):
@@ -23,6 +24,9 @@ class Enemy(pygame.sprite.Sprite):
 		self.dx = math.cos(self.angle)*2
 		self.dy = math.sin(self.angle)*-2
 		self.exploded = False
+		self.tofire = False
+		self.gun = Gun(self.rect.center, self.gs)
+
 
 	def tick(self):
 		if not self.exploded:
