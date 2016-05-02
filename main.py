@@ -33,11 +33,10 @@ class GameSpace(object):
 		self.clock = pygame.time.Clock()
 		self.level = Level(self)
 		self.objects = self.level.createObjects()
-		#self.player = self.objects['Player 1']
-		#self.teammate = self.objects['Player 2']
+		self.tank1 = self.objects['Player 1']
+		self.teammate = self.objects['Player 2']
 		self.enemies = self.objects['Enemies']
 		self.blocks = self.objects['Blocks']
-		self.tank1 = tank(self)
 		self.pellets = []
 		self.explosions = []
 		self.tank1_life = True
@@ -50,30 +49,8 @@ class GameSpace(object):
 			self.clock.tick(60)
 
 			#5) Handle user inputs
-			for event in pygame.event.get():
-				if event.type == QUIT:
-					sys.exit()
-				elif event.type == KEYUP:
-					self.tank1.hold = False
-					self.tank1.key = 0
-				#	print 'keyup'
-				#elif hold is True:
-				#	print 'yes'
-				#	self.tank1.move(key)
-				elif event.type == KEYDOWN:
-					if event.key == 32:
-						self.tank1.tofire = True
-						self.tank1.fire_x, self.tank1.fire_y = pygame.mouse.get_pos()
-					else:
-						self.tank1.hold = True
-						self.tank1.key = event.key
-				#	key = event.key
-				#	self.tank1.move(event.key)
-				elif event.type == MOUSEBUTTONDOWN:
-					self.tank1.tofire = True
-					self.tank1.fire_x, self.tank1.fire_y = pygame.mouse.get_pos()
-				elif event.type == MOUSEBUTTONUP:
-					self.tank1.tofire = False
+			events = pygame.event.get()
+			self.handleEvents(self.tank1, events, pygame.mouse.get_pos())
 
 			#6) Send ticks to objects
 			self.tank1.tick()
@@ -88,8 +65,11 @@ class GameSpace(object):
 			if len(self.enemies) >= 1:
 				if not self.endgame:
 					self.screen.blit(self.background, self.back_rect)
-					self.screen.blit(self.tank1.image, self.tank1.rect)
-					self.screen.blit(self.tank1.gun.image,self.tank1.gun.rect)
+					if self.tank1_life:
+						self.screen.blit(self.tank1.image, self.tank1.rect)
+						self.screen.blit(self.tank1.gun.image,self.tank1.gun.rect)
+						self.screen.blit(self.teammate.image, self.teammate.rect)
+						self.screen.blit(self.teammate.gun.image,self.teammate.gun.rect)	
 					for enemy in self.enemies:
 						self.screen.blit(enemy.image, enemy.rect)
 						self.screen.blit(enemy.gun.image, enemy.gun.rect)
@@ -109,6 +89,33 @@ class GameSpace(object):
 				self.screen.blit(self.background, self.back_rect)
 
 			pygame.display.flip()
+
+	def handleEvents(self, tank, events, mouse):
+		for event in events:
+			if event.type == QUIT:
+				sys.exit()
+			elif event.type == KEYUP:
+				tank.hold = False
+				tank.key = 0
+			#	print 'keyup'
+			#elif hold is True:
+			#	print 'yes'
+			#	self.tank1.move(key)
+			elif event.type == KEYDOWN:
+				if event.key == 32:
+					tank.tofire = True
+					tank.fire_x, tank.fire_y = mouse
+				else:
+					tank.hold = True
+					tank.key = event.key
+			#	key = event.key
+			#	self.tank1.move(event.key)
+			elif event.type == MOUSEBUTTONDOWN:
+				tank.tofire = True
+				tank.fire_x, tank.fire_y = mouse
+			elif event.type == MOUSEBUTTONUP:
+				tank.tofire = False
+
 
 if __name__ == '__main__':
 	gs = GameSpace()
