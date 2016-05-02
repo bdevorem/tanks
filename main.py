@@ -17,6 +17,7 @@ from block import Block
 from tank_obj import tank
 from pellet import Pellet
 from explode import Explosion
+from enemy import Enemy
 
 class GameSpace(object):
 	def start(self):
@@ -34,7 +35,7 @@ class GameSpace(object):
 		self.objects = self.level.createObjects()
 		#self.player = self.objects['Player 1']
 		#self.teammate = self.objects['Player 2']
-		#self.enemies = self.objects['Enemies']
+		self.enemies = self.objects['Enemies']
 		self.blocks = self.objects['Blocks']
 		self.tank1 = tank(self)
 		self.pellets = []
@@ -52,16 +53,22 @@ class GameSpace(object):
 			for event in pygame.event.get():
 				if event.type == QUIT:
 					sys.exit()
-				#elif event.type == KEYUP:
-				#	hold = False
+				elif event.type == KEYUP:
+					self.tank1.hold = False
+					self.tank1.key = 0
 				#	print 'keyup'
 				#elif hold is True:
 				#	print 'yes'
 				#	self.tank1.move(key)
 				elif event.type == KEYDOWN:
-				#	hold = True
+					if event.key == 32:
+						self.tank1.tofire = True
+						self.tank1.fire_x, self.tank1.fire_y = pygame.mouse.get_pos()
+					else:
+						self.tank1.hold = True
+						self.tank1.key = event.key
 				#	key = event.key
-					self.tank1.move(event.key)
+				#	self.tank1.move(event.key)
 				elif event.type == MOUSEBUTTONDOWN:
 					self.tank1.tofire = True
 					self.tank1.fire_x, self.tank1.fire_y = pygame.mouse.get_pos()
@@ -74,20 +81,30 @@ class GameSpace(object):
 				pellet.tick()
 			for expl in self.explosions:
 				expl.tick()
-	
+			for enemy in self.enemies:
+				enemy.tick()
+
 			#7) Display game objects
-			if not self.endgame:
-				self.screen.blit(self.background, self.back_rect)
-				self.screen.blit(self.tank1.image, self.tank1.rect)
-				self.screen.blit(self.tank1.gun.image,self.tank1.gun.rect)
-				for block in self.blocks:
-					self.screen.blit(block.image, block.rect)
-				for pellet in self.pellets:
-					self.screen.blit(pellet.image, pellet.rect)
-				for expl in self.explosions:
-					self.screen.blit(expl.image, expl.rect)
-			else:
-				self.background = pygame.image.load("imgs/gameover.png")
+			if len(self.enemies) >= 1:
+				if not self.endgame:
+					self.screen.blit(self.background, self.back_rect)
+					self.screen.blit(self.tank1.image, self.tank1.rect)
+					self.screen.blit(self.tank1.gun.image,self.tank1.gun.rect)
+					for enemy in self.enemies:
+						self.screen.blit(enemy.image, enemy.rect)
+						self.screen.blit(enemy.gun.image, enemy.gun.rect)
+					for block in self.blocks:
+						self.screen.blit(block.image, block.rect)
+					for pellet in self.pellets:
+						self.screen.blit(pellet.image, pellet.rect)
+					for expl in self.explosions:
+						self.screen.blit(expl.image, expl.rect)
+				else:
+					self.background = pygame.image.load("imgs/gameover.png")
+					self.back_rect = self.background.get_rect()
+					self.screen.blit(self.background, self.back_rect)
+			else: #user wins
+				self.background = pygame.image.load("imgs/youwin.png")
 				self.back_rect = self.background.get_rect()
 				self.screen.blit(self.background, self.back_rect)
 

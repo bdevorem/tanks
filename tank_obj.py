@@ -7,6 +7,7 @@ from pygame.locals import *
 from pellet import Pellet
 from explode import Explosion
 from copy import deepcopy
+from gun import Gun
 
 class tank(pygame.sprite.Sprite):
 	def __init__(self, gs=None):
@@ -25,9 +26,14 @@ class tank(pygame.sprite.Sprite):
 		self.fire_timer = 0
 		self.tofire = False
 		
-		self.gun = gun(self.rect.center, self.gs)
-	
+		self.gun = Gun(self.rect.center, self.gs)
+		self.hold = False
+		self.key = 0
+
 	def tick(self):
+		if self.hold and self.key is not 0:
+			self.move(self.key)
+
 		mx, my = pygame.mouse.get_pos()
 		dx = mx - self.rect.centerx
 		dy = self.rect.centery - my
@@ -103,23 +109,3 @@ class tank(pygame.sprite.Sprite):
 			center = deepcopy(self.rect.center)
 			self.gs.explosions.append(Explosion(center, self.gs))
 
-class gun(pygame.sprite.Sprite):
-	def __init__(self, center=None, gs=None):
-		self.gs = gs
-		self.image = pygame.image.load("imgs/gun.png")
-		self.orig_image = pygame.image.load("imgs/gun.png")
-		self.rect = self.image.get_rect()
-		self.rect.center = center
-
-	def move(self, center):
-		#print "made it"
-		self.rect = self.rect.move(center)
-
-	def rotate(self, dx, dy):
-		self.image = pygame.transform.rotate(self.orig_image, 
-							math.atan2(dy,dx)/math.pi*180)
-		self.rect = self.image.get_rect(center=self.rect.center)
-
-
-
-################################################################
