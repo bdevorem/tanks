@@ -68,20 +68,20 @@ class tank(pygame.sprite.Sprite):
 		"""
 		#self.gun.move(keycode)
 
-		if keycode == 273:
+		if keycode == 273 or keycode == 119:
 			# trial
 			if self.checkBlocks((0, -3)) is False:
 				self.rect = self.rect.move(0, -3)
 				self.gun.move((0,-3))
-		elif keycode == 274:
+		elif keycode == 274 or keycode == 115:
 			if self.checkBlocks((0, 3)) is False:
 				self.rect = self.rect.move(0, 3)
 				self.gun.move((0, 3))
-		elif keycode == 275:
+		elif keycode == 275 or keycode == 100:
 			if self.checkBlocks((3, 0)) is False:
 				self.rect = self.rect.move(3, 0)
 				self.gun.move((3, 0))
-		elif keycode == 276:
+		elif keycode == 276 or keycode == 97:
 			if self.checkBlocks((-3, 0)) is False:
 				self.rect = self.rect.move(-3, 0)
 				self.gun.move((-3, 0))

@@ -46,7 +46,7 @@ class Enemy(pygame.sprite.Sprite):
 				pellet_center = (self.rect.centerx+math.cos(angle)*36,
 							self.rect.centery-math.sin(angle)*36)
 				pellet = Pellet(self, angle, pellet_center, self.gs)
-				self.gs.pellets.append(pellet)
+#				self.gs.pellets.append(pellet)
 
 
 	def move(self, tank1):

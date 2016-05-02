@@ -35,7 +35,7 @@ class Level():
 		####################################################
 
 		enemies = []
-		for n in range(random.randint(1, 5)):
+		for n in range(random.randint(1, 1)):
 			self.x += 50
 			x = self.x
 			y = random.randint(50, 300)

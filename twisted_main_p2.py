@@ -113,6 +113,7 @@ class GameSpace(object):
 		evs = []
 		for event in events:
 			ev = {}
+			ev['type'] = ''
 			if event.type == QUIT:
 				ev['type'] = 'quit'
 			elif event.type == KEYUP:
@@ -179,10 +180,11 @@ class GameSpace(object):
 	def addData(self, data):
 		self.teammate_state = pickle.loads(data)
 		try:
-			mouse = self.teammate_state['mouse']
+			mouse = self.teammate_state['mouse_pos']
 			events = self.teammate_state['events']
-			self.teammate.mx, self.teammate.my = self.teammate_state['mouse']
-			handleRemoteEvents(self.teammate, events, mouse)
+			self.teammate.mx = mouse[0]
+			self.teammate.my = mouse[1]
+			self.handleRemoteEvents(self.teammate, events, mouse)
 		except Exception as ex:
 			pass
 
