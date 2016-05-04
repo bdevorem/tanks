@@ -47,6 +47,11 @@ class Enemy(pygame.sprite.Sprite):
 
 	def tick(self):
 		if not self.exploded:
+			if not self.target.life:
+				if self.target == self.gs.tank1:
+					self.target = self.gs.teammate
+				else:
+					self.target = self.gs.tank1
 			# first check if direction needs to be changed
 			self.checkBounce()
 			# then move. will always move, unlike user
