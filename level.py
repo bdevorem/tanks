@@ -21,6 +21,7 @@ class Level():
 		"""
 		self.gs = gs
 		self.x = 10
+		self.y = 30
 
 	def createObjects(self):
 		
@@ -53,11 +54,14 @@ class Level():
 		# they all have fixed x locations to ensure no overlap,
 		# but y location is random
 		enemies = []
+		angle = 25
 		for n in range(random.randint(1, 5)):
 			self.x += 50
+			self.y += 50
+			angle = angle + 37
 			x = self.x
-			y = random.randint(50, 300)
-			enemies.append(Enemy(self.gs, (x, y)))
+			y = self.y
+			enemies.append(Enemy(self.gs, (x, y), angle))
 
 		objects['Enemies'] = enemies
 

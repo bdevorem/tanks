@@ -15,7 +15,7 @@ from gun import Gun
 from copy import deepcopy
 
 class Enemy(pygame.sprite.Sprite):
-	def __init__(self, gs=None, center=None):
+	def __init__(self, gs=None, center=None, angle=None):
 		"""
 		Enemy class: sort of a hybrid between the user
 		tank and the pellets. It is a tank, and the gun
@@ -25,8 +25,7 @@ class Enemy(pygame.sprite.Sprite):
 		pygame.sprite.Sprite.__init__(self)
 		self.gs = gs
 
-		# random angle for motion
-		self.angle = random.uniform(1, 360)
+		self.angle = angle
 		
 		self.center = center
 
