@@ -9,6 +9,9 @@ Python 2.x.x Required
 To run the game, first download the source code from GitHub.  
 Once the code is downloaded, change directory to `tanks/`  
 To enable execution, run `chmod +x host.py client.py`  
+In order to run the programs on your machine, you need to open 
+`client.py` and edit the `HOST` to the host computer name you plan 
+on using.  
 To start the two-player game, first run `./host.py` on one machine  
 To start the other player, fun `./client.py` on another
   
