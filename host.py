@@ -206,6 +206,7 @@ class GameSpace(object):
 	# Called when data is received from our teammate
 	def addData(self, data):
 		# unload it
+		# Pickle; general pickle docs
 		self.teammate_state = pickle.loads(data)
 		try:
 			# Grab mouse info and events
@@ -220,6 +221,7 @@ class GameSpace(object):
 
 	# Send the state to our friend
 	def sendState(self, state):
+		# Done with pickle, found on the normal online documentation
 		s = pickle.dumps(state)
 		self.cf.conn.send(s)
 
