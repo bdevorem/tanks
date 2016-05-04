@@ -55,7 +55,7 @@ class Level():
 		# but y location is random
 		enemies = []
 		angle = 25
-		for n in range(random.randint(1, 5)):
+		for n in range(1, 5):
 			self.x += 50
 			self.y += 50
 			angle = angle + 37
