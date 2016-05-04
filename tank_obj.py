@@ -32,6 +32,7 @@ class tank(pygame.sprite.Sprite):
 		self.tofire = False
 		self.mx = 0
 		self.my = 0
+		self.life = True
 
 		#attach gun, has to be a different part in order
 		# to move around seemlessly (as opposed to a weird
@@ -121,7 +122,7 @@ class tank(pygame.sprite.Sprite):
 		Explosion is another sprite, gets sent to gs
 		"""
 		if self.gs.tank1_life:
-			self.gs.tank1_life = False
+			self.life = False
 			center = deepcopy(self.rect.center)
 			self.gs.explosions.append(Explosion(center, self.gs))
 
