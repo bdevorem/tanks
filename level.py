@@ -55,12 +55,12 @@ class Level():
 		# but y location is random
 		enemies = []
 		angle = 25
-		target = self.gs.tank1
+		target = objects['Player 1']
 		for n in range(1, 5):
-			if target is self.gs.tank1:
-				target = self.gs.teammate
+			if target is objects['Player 1']:
+				target = objects['Player 2']
 			else:
-				target = self.gs.tank1
+				target = objects['Player 1']
 			self.x += 50
 			self.y += 50
 			angle = angle + 37
