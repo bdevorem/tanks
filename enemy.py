@@ -15,7 +15,7 @@ from gun import Gun
 from copy import deepcopy
 
 class Enemy(pygame.sprite.Sprite):
-	def __init__(self, gs=None, center=None, angle=None):
+	def __init__(self, gs=None, center=None, angle=None, target=None):
 		"""
 		Enemy class: sort of a hybrid between the user
 		tank and the pellets. It is a tank, and the gun
@@ -50,14 +50,14 @@ class Enemy(pygame.sprite.Sprite):
 			# first check if direction needs to be changed
 			self.checkBounce()
 			# then move. will always move, unlike user
-			self.move(self.gs.tank1)
+			self.move(self.target)
 
 			self.fire_timer += 1
 			if self.fire_timer == self.fire_interval:
 				#create pellets when the interval reaches
 				# the time specified at creation
 				self.fire_timer = 0
-				fire_x, fire_y = self.gs.tank1.rect.center
+				fire_x, fire_y = self.target.rect.center
 				angle = math.atan2(self.rect.centery-fire_y, 
 									fire_x-self.rect.centerx)
 				pellet_center = (self.rect.centerx+math.cos(angle)*36,
