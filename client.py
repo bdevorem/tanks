@@ -162,8 +162,10 @@ class GameSpace(object):
 		self.handleEvents(self.tank1, events, pygame.mouse.get_pos())
 
 		#6) Send ticks to objects
-		self.tank1.tick()
-		self.teammate.tick()
+		if self.tank1_life:
+			self.tank1.tick()
+		if self.tank2_life:
+			self.teammate.tick()
 		for pellet in self.pellets:
 			pellet.tick()
 		for expl in self.explosions:
@@ -174,7 +176,7 @@ class GameSpace(object):
 		#7) Display game objects
 		if len(self.enemies) >= 1:
 			# If still playing
-			if not self.tank1_life and not self.tank2_life:
+			if self.tank1_life or self.tank2_life:
 				# Basic blitting stuff
 				self.screen.blit(self.background, self.back_rect)
 				if self.tank1_life:
