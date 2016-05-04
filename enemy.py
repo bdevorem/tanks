@@ -26,7 +26,7 @@ class Enemy(pygame.sprite.Sprite):
 		self.gs = gs
 
 		self.angle = angle
-		
+		self.target = target		
 		self.center = center
 
 		self.image = pygame.image.load("imgs/tank3.png")
