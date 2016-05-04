@@ -1,4 +1,9 @@
 #!/usr/bin/env python2
+# Breanna Devore-McDonald
+# Elliott Runburg
+# tank_obj.py
+# class for user player
+
 import sys
 import os
 import pygame
@@ -28,14 +33,19 @@ class tank(pygame.sprite.Sprite):
 		self.mx = 0
 		self.my = 0
 
+		#attach gun, has to be a different part in order
+		# to move around seemlessly (as opposed to a weird
+		# rotating square)
 		self.gun = Gun(self.rect.center, self.gs)
 		self.hold = False
 		self.key = 0
 
 	def tick(self):
+		#allow for coasting w a variable set in gamespace
 		if self.hold and self.key is not 0:
 			self.move(self.key)
 
+		# get movement
 		dx = self.mx - self.rect.centerx
 		dy = self.rect.centery - self.my
 		if self.fire_timer != 0:
@@ -48,25 +58,24 @@ class tank(pygame.sprite.Sprite):
 
 			fire_x = self.mx
 			fire_y = self.my
+			# move bullets to start outside of rect, so they 
+			# don't get stuck bc of collision detection
 			angle = math.atan2(self.rect.centery-fire_y, fire_x-self.rect.centerx)
 			pellet_center = (self.rect.centerx+math.cos(angle)*36,self.rect.centery-math.sin(angle)*36)
 			pellet = Pellet(self, angle, pellet_center, self.gs)
 			self.gs.pellets.append(pellet)
-
-			#########################################################
-			# SOUND
-			#if pygame.mixer.music.get_busy() == False:
-			#	pygame.mixer.music.load("screammachine.wav")
-			#	pygame.mixer.music.set_volume(1)
-			#	pygame.mixer.music.play()
 		else:
-			#pygame.mixer.stop()
+			# if we are moving, rotate gun
+			# this class is completely referenced through
+			# the tank class since it is not a real sprite,
+			# jsut a sub sprite
 			if dx != 0:
 				self.gun.rotate(dx, dy)
 
 	def move(self, keycode):
 		"""
 		Called when keydown is detected in main
+		Moves objects according to key
 		"""
 		#self.gun.move(keycode)
 
@@ -91,6 +100,7 @@ class tank(pygame.sprite.Sprite):
 	def checkBlocks(self, movement):
 		"""
 		Return True if there is any overlap
+		in tank and blocks, no explosion
 		"""
 		collide = False
 		self.temp_rect = self.rect.move(movement[0], 0)
@@ -106,8 +116,14 @@ class tank(pygame.sprite.Sprite):
 		return collide
 
 	def explode(self):
+		"""
+		Create a new explosion at the center of the collision
+		Explosion is another sprite, gets sent to gs
+		"""
 		if self.gs.tank1_life:
 			self.gs.tank1_life = False
 			center = deepcopy(self.rect.center)
 			self.gs.explosions.append(Explosion(center, self.gs))
+
+
 

@@ -1,3 +1,8 @@
+#!/usr/bin/env python2
+# Breanna Devore-McDonald
+# Elliott Runburg
+# level.py
+
 import sys
 import os
 import pygame
@@ -10,14 +15,23 @@ from tank_obj import tank
 
 class Level():
 	def __init__(self, gs=None):
+		"""
+		This class sets up the main gamspace objects
+		which is essentially the entire level
+		"""
 		self.gs = gs
 		self.x = 10
 
 	def createObjects(self):
+		
+		# create the two teammates and store in dictionary
+		# this method is used for easy access of gamspace
+		# objects in main
 		objects = {}
 		objects['Player 1'] = tank((55, 400), self.gs)
 		objects['Player 2'] = tank((400, 55), self.gs)
 
+		# create the border of blocks
 		blocks = []
 		for y in range(0,(int)((self.gs.size[1])/32)):
 			block1 = Block(0, y*32, self.gs)
@@ -34,8 +48,12 @@ class Level():
 		
 		####################################################
 
+		# create the random set of enemies for the game
+		# can be anywhere from 1 to 5
+		# they all have fixed x locations to ensure no overlap,
+		# but y location is random
 		enemies = []
-		for n in range(random.randint(1, 1)):
+		for n in range(random.randint(1, 5)):
 			self.x += 50
 			x = self.x
 			y = random.randint(50, 300)
