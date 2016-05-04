@@ -174,7 +174,7 @@ class GameSpace(object):
 		#7) Display game objects
 		if len(self.enemies) >= 1:
 			# If still playing
-			if not self.endgame:
+			if not self.tank1_life and not self.tank2_life:
 				# Basic blitting stuff
 				self.screen.blit(self.background, self.back_rect)
 				if self.tank1_life:

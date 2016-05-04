@@ -91,7 +91,7 @@ class Pellet(pygame.sprite.Sprite):
 			self.gs.tank1.explode()
 		# Teammate
 		if pygame.Rect.colliderect(self.rect, self.gs.teammate.rect):
-			self.explode()
+			self.explode(False)
 			self.gs.teammate.explode()
 		# enemies
 		for enemy in self.gs.enemies:

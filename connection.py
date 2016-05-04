@@ -26,6 +26,7 @@ class ServerConnection(Protocol):
 		self.gs = gs
 
 	# When connection is made, start the game, add the looping call
+	# This ensures the game will run indefinitely (at least on twisted's end)
 	def connectionMade(self):
 		print "connection made"
 		self.gs.start()
@@ -64,6 +65,7 @@ class ClientConnection(Protocol):
 		self.gs = gs
 
 	# On connection, start the game, add the looping call
+	# This ensures the game will run indefinitely (at least on twisted's end)
 	def connectionMade(self):
 		print "connection made"
 		self.gs.start()

@@ -172,12 +172,13 @@ class GameSpace(object):
 		#7) Display game objects
 		if len(self.enemies) >= 1:
 			# If still playing
-			if not self.endgame:
+			if not self.tank1_life and not self.tank2_life:
 				# Basic blitting stuff
 				self.screen.blit(self.background, self.back_rect)
 				if self.tank1_life:
 					self.screen.blit(self.tank1.image, self.tank1.rect)
 					self.screen.blit(self.tank1.gun.image,self.tank1.gun.rect)	
+				if self.tank2_life:
 					self.screen.blit(self.teammate.image, self.teammate.rect)
 					self.screen.blit(self.teammate.gun.image,self.teammate.gun.rect)
 				for enemy in self.enemies:
