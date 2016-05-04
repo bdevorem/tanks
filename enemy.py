@@ -15,7 +15,7 @@ from gun import Gun
 from copy import deepcopy
 
 class Enemy(pygame.sprite.Sprite):
-	def __init__(self, gs=None, center=None, angle=None, target=None):
+	def __init__(self, gs=None, center=None, angle=None, target=None, interval = None):
 		"""
 		Enemy class: sort of a hybrid between the user
 		tank and the pellets. It is a tank, and the gun
@@ -42,7 +42,7 @@ class Enemy(pygame.sprite.Sprite):
 		self.gun = Gun(self.rect.center, self.gs)
 
 		#random interval at which to fire at user
-		self.fire_interval = random.randint(100, 500)
+		self.fire_interval = interval
 		self.fire_timer = 0
 
 	def tick(self):

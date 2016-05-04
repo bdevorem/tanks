@@ -55,6 +55,7 @@ class Level():
 		# but y location is random
 		enemies = []
 		angle = 25
+		interval = [300, 200, 560, 245, 500]
 		target = objects['Player 1']
 		for n in range(1, 5):
 			if target is objects['Player 1']:
@@ -66,7 +67,8 @@ class Level():
 			angle = angle + 37
 			x = self.x
 			y = self.y
-			enemies.append(Enemy(self.gs, (x, y), angle, target))
+			i = interval[n-1]
+			enemies.append(Enemy(self.gs, (x, y), angle, target, i))
 
 		objects['Enemies'] = enemies
 
