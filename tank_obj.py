@@ -25,7 +25,9 @@ class tank(pygame.sprite.Sprite):
 		self.fire_y = 0
 		self.fire_timer = 0
 		self.tofire = False
-		
+		self.mx = 0
+		self.my = 0
+
 		self.gun = Gun(self.rect.center, self.gs)
 		self.hold = False
 		self.key = 0
@@ -34,9 +36,8 @@ class tank(pygame.sprite.Sprite):
 		if self.hold and self.key is not 0:
 			self.move(self.key)
 
-		mx, my = pygame.mouse.get_pos()
-		dx = mx - self.rect.centerx
-		dy = self.rect.centery - my
+		dx = self.mx - self.rect.centerx
+		dy = self.rect.centery - self.my
 		if self.fire_timer != 0:
 			self.fire_timer -= 1
 		if self.tofire == True and self.fire_timer == 0:
@@ -45,7 +46,8 @@ class tank(pygame.sprite.Sprite):
 			# gun will be pointing in the same direction
 			# ^^ jk because of collision detection
 
-			fire_x, fire_y = pygame.mouse.get_pos()
+			fire_x = self.mx
+			fire_y = self.my
 			angle = math.atan2(self.rect.centery-fire_y, fire_x-self.rect.centerx)
 			pellet_center = (self.rect.centerx+math.cos(angle)*36,self.rect.centery-math.sin(angle)*36)
 			pellet = Pellet(self, angle, pellet_center, self.gs)
